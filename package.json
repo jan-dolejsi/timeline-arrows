@@ -1,13 +1,14 @@
 {
-  "name": "timeline-arrows",
-  "version": "4.1.0",
+  "name": "vis-timeline-arrows",
+  "version": "5.0.0",
   "description": "Package to easily draw lines to connect items in the vis Timeline module.",
-  "main": "arrow.js",
-  "types": "arrow.d.ts",
+  "main": "arrows.js",
+  "types": "arrows.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generateTypes": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrow.js",
-    "prepack": "npm run generateTypes"
+    "generateTypes": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrows.js",
+    "prepack": "npm run generateTypes",
+    "serve": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/javdome/timeline-arrows#readme",
   "devDependencies": {
-    "typescript": "^5.0.4"
+    "lite-server": "^2.6.1",
+    "typescript": "^5.2.2"
   }
 }

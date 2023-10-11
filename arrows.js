@@ -1,4 +1,13 @@
 /**
+ * vis-timeline-arrows package is a fork of the timeline-arrows. 
+ * The pull request is being ignored, hence this package was made to keep the good idea going.
+ * I was originally proposing fairly cosmetic changes in the pull request, 
+ * but since I decided to fork, let's turn this into a more JavaScript looking and feeling code.
+ * I would be more than happy to get this code merged into the original repo 
+ * and subsequently deprecating this npm package again.
+ * 
+ * Original package description:
+ * 
  * timeline-arrows
  * https://github.com/javdome/timeline-arrows
  *
@@ -37,8 +46,8 @@
 /**
  * @typedef ArrowSpec Arrow specification
  * @property {ArrowIdType} id arrow id
- * @property {VisIdType} id_item_1 start timeline item id
- * @property {VisIdType} id_item_2 end timeline item id
+ * @property {VisIdType} item1Id start timeline item id
+ * @property {VisIdType} item2Id end timeline item id
  * @property {string} [title] optional arrow title
  */
 
@@ -51,14 +60,28 @@
  * @property {number} [strokeWidth] arrow thickness in pixels
  */
 
+
+/**
+ * @typedef VisItem timeline item
+ * @property {VisIdType} group
+ */
+
+/**
+ * @typedef Timeline Timeline object from vis-timeline
+ * @property {{center: Element, container: {id: string}}} dom dom
+ * @property {(event: "changed", callback: () => void) => void} on event handler
+ * @property {{get: (id: VisIdType) => VisItem}} itemsData all items
+ * @property {()=>void} redraw triggers re-draw
+ */
+
 /** Arrow set for a vis.js Timeline. */
-export default class Arrow {
+export class Arrows {
 
     /**
      * Creates arrows.
-     * @param {*} timeline timeline object
+     * @param {Timeline} timeline timeline object
      * @param {ArrowSpec[]} dependencies arrows
-     * @param {ArrowOptions} [options] 
+     * @param {ArrowOptions} [options] options
      */
     constructor(timeline, dependencies, options) {
         this._svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -119,7 +142,7 @@ export default class Arrow {
         this._arrowHead.appendChild(this._arrowHeadPath);
         this._svg.appendChild(this._arrowHead);
         //Create paths for the started dependency array
-        for (let i = 0; i < this._dependency.length; i++) {
+        for (const _element of this._dependency) {
             this._createPath();
         }
         
@@ -162,26 +185,26 @@ export default class Arrow {
      */
     _drawArrows(dep, index) {
         //Checks if both items exist
-        //if( (typeof this._timeline.itemsData._data[dep.id_item_1] !== "undefined") && (typeof this._timeline.itemsData._data[dep.id_item_2] !== "undefined") ) {
+        //if( (typeof this._timeline.itemsData._data[dep.item1Id] !== "undefined") && (typeof this._timeline.itemsData._data[dep.item2Id] !== "undefined") ) {
         //debugger;
-        const bothItemsExist = (this._timeline.itemsData.get(dep.id_item_1) !== null) && (this._timeline.itemsData.get(dep.id_item_2) !== null);
+        const bothItemsExist = (this._timeline.itemsData.get(dep.item1Id) !== null) && (this._timeline.itemsData.get(dep.item2Id) !== null);
         
         //Checks if at least one item is visible in screen
         let oneItemVisible = false; //Iniciamos a false
         if (bothItemsExist) {    
             const visibleItems = this._timeline.getVisibleItems();
-            for (let k = 0; k < visibleItems.length ; k++) {
-                if (dep.id_item_1 == visibleItems[k]) oneItemVisible = true;
-                if (dep.id_item_2 == visibleItems[k]) oneItemVisible = true;
+            for (const item of visibleItems) {
+                if (dep.item1Id == item) oneItemVisible = true;
+                if (dep.item2Id == item) oneItemVisible = true;
             }
         
             //Checks if the groups of items are both visible
             var groupOf_1_isVisible = false; //Iniciamos a false
             var groupOf_2_isVisible = false; //Iniciamos a false
             
-            let groupOf_1 = this._timeline.itemsData.get(dep.id_item_1).group; //let groupOf_1 = items.get(dep.id_item_1).group;
+            let groupOf_1 = this._timeline.itemsData.get(dep.item1Id).group; //let groupOf_1 = items.get(dep.item1Id).group;
             
-            let groupOf_2 = this._timeline.itemsData.get(dep.id_item_2).group; //let groupOf_2 = items.get(dep.id_item_2).group;
+            let groupOf_2 = this._timeline.itemsData.get(dep.item2Id).group; //let groupOf_2 = items.get(dep.item2Id).group;
                        
             if ( this._timeline.groupsData.get(groupOf_1) ) groupOf_1_isVisible = true;
 
@@ -198,14 +221,14 @@ export default class Arrow {
         }
 
         if ( (groupOf_1_isVisible && groupOf_2_isVisible) && (oneItemVisible) && (bothItemsExist)) {
-            var item_1 = this._getItemPos(this._timeline.itemSet.items[dep.id_item_1]);
-            var item_2 = this._getItemPos(this._timeline.itemSet.items[dep.id_item_2]);
+            let item_1 = this._getItemPos(this._timeline.itemSet.items[dep.item1Id]);
+            let item_2 = this._getItemPos(this._timeline.itemSet.items[dep.item2Id]);
 
             if (!this._followRelationships && item_2.mid_x < item_1.mid_x) {
                 [item_1, item_2] = [item_2, item_1]; // As demo, we put an arrow between item 0 and item1, from the one that is more on left to the one more on right.
             }
 
-            var curveLen = item_1.height * 2; // Length of straight Bezier segment out of the item.
+            const curveLen = item_1.height * 2; // Length of straight Bezier segment out of the item.
 
             if (this._followRelationships && item_2.mid_x < item_1.mid_x) {
                 item_2.right += 10; // Space for the arrowhead.
@@ -320,7 +343,10 @@ export default class Arrow {
             this._dependency.splice(index, 1); //Elimino del array dependency
             this._dependencyPath.splice(index, 1); //Elimino del array dependencyPath
         
-            list[index + 1].parentNode.removeChild(list[index + 1]); //Lo elimino del dom
+            const parentNode = list[index + 1].parentNode; // may be null
+            if (parentNode) {
+                parentNode.removeChild(list[index + 1]); //Lo elimino del dom
+            }
         }
     }
 
@@ -333,7 +359,7 @@ export default class Arrow {
     removeItemArrows(id) {
         let listOfRemovedArrows = [];
         for (let i = 0; i < this._dependency.length; i++) {
-            if ( (this._dependency[i].id_item_1 == id) || (this._dependency[i].id_item_2 == id) ) {
+            if ( (this._dependency[i].item1Id == id) || (this._dependency[i].item2Id == id) ) {
                 listOfRemovedArrows.push(this._dependency[i].id);
                 this.removeArrow(this._dependency[i].id);
                 i--;

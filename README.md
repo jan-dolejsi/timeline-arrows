@@ -1,4 +1,4 @@
-# Timeline-arrow
+# Timeline-arrows
 
 Following the issue of vis https://github.com/almende/vis/issues/1699, and thanks to the comments of @frboyer and @JimmyCheng, I have created a class to easily draw lines to connect items in the vis Timeline module.
 
@@ -13,7 +13,7 @@ Following the issue of vis https://github.com/almende/vis/issues/1699, and thank
 npm install timeline-arrows
 ```
 
-2 - Import the class `Arrow` from `arrow.js` in your project
+2 - Import the class `Arrows` from `arrows.js` in your project
 
 
 3 - Create your timeline as usual (see [vis-timeline docs](https://visjs.github.io/vis-timeline/docs/timeline/)).
@@ -27,8 +27,8 @@ const myTimeline = new vis.Timeline(container, items, groups, options);
 
 4 - Create your arrows as an array of objects. These objets must have, at least, the following properties:
 * id
-* id_item_1 (id of one timeline's items)
-* id_item_2 (id of the other timeline's items that you want to connect with)
+* item1Id (id of one timeline's items)
+* item2Id (id of the other timeline's items that you want to connect with)
 
 And optionally:
 * title (insert a text and it will show a title if you hover the mouse in the arrow)
@@ -37,23 +37,22 @@ For instance:
 
 ```javascript
 var arrowsSpecs = [
-    { id: 2, id_item_1: 1, id_item_2: 2 },
-    { id: 5, id_item_1: 3, id_item_2: 5, title:'Hello!!!' },
-    { id: 7, id_item_1: 6, id_item_2: 7 },
-    { id: 10, id_item_1: 3, id_item_2: 8, title:'I am a title!!!' }
+    { id: 2, item1Id: 1, item2Id: 2 },
+    { id: 5, item1Id: 3, item2Id: 5, title:'Hello!!!' },
+    { id: 7, item1Id: 6, item2Id: 7 },
+    { id: 10, item1Id: 3, item2Id: 8, title:'I am a title!!!' }
 ];
 ```
 
-5 - Create your Arrow instance for your timeline and your arrows.
+5 - Create your Arrows instance for your timeline and your arrows.
 
 For instance:
 
 ```javascript
-const myArrows = new Arrow(myTimeline, arrowsSpecs);
+const myArrows = new Arrows(myTimeline, arrowsSpecs);
 ```
 
 That's it :)
-
 
 ## Options
 
@@ -68,7 +67,7 @@ const options = {
     },
 };
 
-const myArrows = new Arrow(myTimeline, arrowsSpecs, options);
+const myArrows = new Arrows(myTimeline, arrowsSpecs, options);
 ```
 
 **followRelationships** - defaults to false.
@@ -92,7 +91,7 @@ I have created the following methods:
 For instance:
 
 ```javascript
-myArrow.getArrow(2);
+myArrows.getArrow(2);
 ```
 
 **addArrow ( *arrow object* )**  Inserts a new arrow.
@@ -100,7 +99,7 @@ myArrow.getArrow(2);
 For instance:
 
 ```javascript
-myArrow.addArrow({ id: 13, id_item_1: 15, id_item_2: 16 });
+myArrows.addArrow({ id: 13, item1Id: 15, item2Id: 16 });
 ```
 
 **removeArrow ( *arrow_Id* )**   Removes the arrows with this arrow_Id.
@@ -108,7 +107,7 @@ myArrow.addArrow({ id: 13, id_item_1: 15, id_item_2: 16 });
 For instance:
 
 ```javascript
-myArrow.removeArrow( 10 );
+myArrows.removeArrow( 10 );
 ```
 
 **removeItemArrows ( *item_Id* )**   Removes the arrows connected with Items with this item_Id. Returns an array with the id's of the removed arrows.
@@ -116,7 +115,7 @@ myArrow.removeArrow( 10 );
 For instance:
 
 ```javascript
-myArrow.removeItemArrows( 23 );
+myArrows.removeItemArrows( 23 );
 ```
 
 ## Examples
@@ -124,3 +123,23 @@ myArrow.removeItemArrows( 23 );
 You can see some working examples here:
 
 https://javdome.github.io/timeline-arrows/index.html
+
+... or by running following command:
+
+```shell
+npm run serve
+```
+
+## Changes
+
+### Changes in 5.0.0 (breaking changes from 4.1.0)
+
+Class `Arrow` was renamed to `Arrows`, becuase that is what it represents.
+It is also no longer the default export, so this is easier to consume in more modern JavaScript.
+
+The arrow spec fields were renamed from the snake_case notation `id_item_1` and `id_item_2`
+to the JavaScript standard `item1Id` and `item2Id`.
+
+File `arrows.js` was renamed to `arrows.js`, which makes more sense in the import statement.
+
+`arrows.d.ts` is generated from JSDoc using Typescript transpiler.
