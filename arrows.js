@@ -71,6 +71,9 @@
  * @property {{center: Element, container: {id: string}}} dom dom
  * @property {(event: "changed", callback: () => void) => void} on event handler
  * @property {{get: (id: VisIdType) => VisItem}} itemsData all items
+ * @property {{get: (id: VisIdType) => any}} groupsData all groups
+ * @property {{items: any}} itemSet item set
+ * @property {() => [VisIdType]} getVisibleItems gets visible items
  * @property {()=>void} redraw triggers re-draw
  */
 
