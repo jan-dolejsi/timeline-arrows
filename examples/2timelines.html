@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Timeline | Group example, with an arrow</title>
     <!-- Fuentes de iconos -->
@@ -27,11 +27,12 @@
       rel="stylesheet"
       type="text/css"
     />
+    <script type="module" src="./2timelines.js"></script>
   </head>
   <body>
-    <button onclick="Window.showVisibleItems()">Show current visible items</button>
-    <button onclick="Window.showGroups()">Show groups</button>
-    <button onclick="Window.remove()">Delete arrow between 3 and 8</button>
+    <button id="showVisibleItems">Show current visible items</button>
+    <button id="showGroups">Show groups</button>
+    <button id="remove">Delete arrow between 3 and 8</button>
     <div>
       <h2>visible items:</h2>
       <h3 id="visibleItemsContainer"></h3>
@@ -42,10 +43,6 @@
     </div>
 
     <div id="visualization2"></div>
-
-    
-    <!-- <script src="../arrow.js"></script> -->
-    <script type="module" src="./2timelines.js"></script>
 
   </body>
 </html>
