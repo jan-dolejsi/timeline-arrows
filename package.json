@@ -1,7 +1,7 @@
 {
   "name": "vis-timeline-arrows",
   "version": "5.0.0",
-  "description": "Package to easily draw lines to connect items in the vis Timeline module.",
+  "description": "Package to easily draw lines to connect items in the vis Timeline module. Fork from @alisqi.",
   "main": "arrows.js",
   "types": "arrows.d.ts",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/javdome/timeline-arrows.git"
+    "url": "git+https://github.com/jan-dolejsi/timeline-arrows.git"
   },
   "keywords": [
     "vis",
@@ -21,9 +21,9 @@
   "author": "Javi Domenech",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/javdome/timeline-arrows/issues"
+    "url": "https://github.com/jan-dolejsi/timeline-arrows/issues"
   },
-  "homepage": "https://github.com/javdome/timeline-arrows#readme",
+  "homepage": "https://github.com/jan-dolejsi/timeline-arrows#readme",
   "devDependencies": {
     "lite-server": "^2.6.1",
     "typescript": "^5.2.2"
