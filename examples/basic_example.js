@@ -7,6 +7,7 @@ const options = {
   groupOrder: "content", // groupOrder can be a property name or a sorting function
   selectable: true,
   editable: true,
+  // orientation: "top",
   groupTemplate: function (group) { //function to hide groups
     const container = document.createElement('div');
     const label = document.createElement('span');

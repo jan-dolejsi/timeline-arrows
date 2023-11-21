@@ -1,7 +1,7 @@
 {
   "name": "vis-timeline-arrows",
-  "version": "5.0.0",
-  "description": "Package to easily draw lines to connect items in the vis Timeline module. Fork from @alisqi.",
+  "version": "5.0.1",
+  "description": "Package to easily draw lines to connect items in the vis Timeline module. Fork from @alisqi and @javdome v4.1.1",
   "main": "arrows.js",
   "types": "arrows.d.ts",
   "scripts": {
