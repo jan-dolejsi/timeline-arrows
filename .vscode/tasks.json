@@ -1,0 +1,31 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "generateTypes",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"label": "npm: generateTypes",
+			"detail": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrows.js",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"group": "build",
+			"label": "npm: watch",
+			"detail": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrows.js --watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		}
+	]
+}

@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "generateTypes": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrows.js",
+    "watch": "tsc --allowJs -d --emitDeclarationOnly --lib es2015,dom arrows.js --watch",
     "prepack": "npm run generateTypes",
     "serve": "lite-server"
   },
