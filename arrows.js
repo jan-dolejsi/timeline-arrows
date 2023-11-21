@@ -75,6 +75,7 @@
  * @property {{items: any}} itemSet item set
  * @property {() => [VisIdType]} getVisibleItems gets visible items
  * @property {()=>void} redraw triggers re-draw
+ * @property {{orientation: {item: "bottom" | "top"}}} options options, see https://visjs.github.io/vis-timeline/docs/timeline/#Configuration_Options
  */
 
 /** Arrow set for a vis.js Timeline. */
